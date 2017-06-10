@@ -3,8 +3,8 @@ function Wave (direction, A, T, wavelength) {
 
 	s.direction = direction;
 	s.A = A;
-	s.T = T;
-	s.wavelength = wavelength;
+	s.T = T || 0.1;
+	s.wavelength = wavelength || 1;
 	s.oscillators = new Array();
 	s.numOscillatorInOneT = null;
 	s.intervalBetweenTwoOscillators = null;
@@ -14,9 +14,9 @@ function Wave (direction, A, T, wavelength) {
 	s.addOscillator();
 }
 
-Wave.MAX_A = 3;
-Wave.MAX_T = 4;
-Wave.MAX_WAVELENGTH = 3;
+Wave.MAX_A = 3.0;
+Wave.MAX_T = 2.0;
+Wave.MAX_WAVELENGTH = 3.0;
 
 Wave.prototype.start = function () {
 	this.preTime = (new Date()).getTime();
@@ -26,6 +26,7 @@ Wave.prototype.addOscillator = function () {
 	var s = this, dx = 0.1;
 
 	s.numOscillatorInOneT = s.wavelength / dx;
+	s.intervalBetweenTwoOscillators = (s.T / s.numOscillatorInOneT) * TIME_SCALE;
 
 	for (var i = 0, dx = 0.1; i < 130; i++) {
 		var o = new Oscillator(s.A, s.T);

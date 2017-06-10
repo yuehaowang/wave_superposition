@@ -79,15 +79,15 @@ ControlLayer.prototype.createPanel = function (d) {
 	txt.size = 20;
 	panel.addChild(txt);
 	
-	rangeWidget = s.createRangeWithHint("Wavelength (λ): ");
+	rangeWidget = s.createRangeWithHint("Wavelength (λ): ", Wave.MAX_WAVELENGTH, "m");
 	panel.addChild(rangeWidget);
 	panel.wavelengthRange = rangeWidget.range;
 
-	rangeWidget = s.createRangeWithHint("Period (T): ");
+	rangeWidget = s.createRangeWithHint("Period (T): ", Wave.MAX_T, "s");
 	panel.addChild(rangeWidget);
 	panel.periodRange = rangeWidget.range;
 
-	rangeWidget = s.createRangeWithHint("Amplitude (A): ");
+	rangeWidget = s.createRangeWithHint("Amplitude (A): ", Wave.MAX_A, "m");
 	panel.addChild(rangeWidget);
 	panel.amplitudeRange = rangeWidget.range;
 
@@ -106,8 +106,8 @@ ControlLayer.prototype.createPanel = function (d) {
 	return panel;
 }
 
-ControlLayer.prototype.createRangeWithHint = function (hint) {
-	var txt, range;
+ControlLayer.prototype.createRangeWithHint = function (hint, max, unit) {
+	var txt, range, valTxt;
 
 	var layer = new LSprite();
 
@@ -121,7 +121,18 @@ ControlLayer.prototype.createRangeWithHint = function (hint) {
 	range.x = txt.getWidth() + 10;
 	layer.addChild(range);
 
+	valTxt = new LTextField();
+	valTxt.text =  parseFloat(0.5 * max).toFixed(1) + unit;
+	valTxt.x = range.x + 210;
+	valTxt.y = 3;
+	valTxt.size = 12;
+	layer.addChild(valTxt);
+
 	layer.range = range;
+
+	range.addEventListener(LRange.ON_CHANGE, function () {
+		valTxt.text = parseFloat(range.value * 0.01 * max).toFixed(1) + unit;
+	});
 
 	return layer;
 }
