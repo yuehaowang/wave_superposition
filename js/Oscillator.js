@@ -1,10 +1,11 @@
-function Oscillator (A, T) {
+function Oscillator (A, T, initDir) {
 	var s = this;
 
 	s.x = 0;
 	s.y = 0;
 	s.A = A;
 	s.T = T;
+	s.initDir = initDir;
 	s.isStart = false;
 	s.startDate = null;
 }
@@ -25,5 +26,5 @@ Oscillator.prototype.loop = function () {
 
 	var nowDate = (new Date()).getTime(), usedTime = nowDate - s.startDate;
 
-	s.y = s.A * Math.sin((usedTime / s.T / TIME_SCALE) * Math.PI * 2);
+	s.y = -s.A * s.initDir * Math.sin((usedTime / s.T / TIME_SCALE) * Math.PI * 2);
 };

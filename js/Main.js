@@ -1,4 +1,4 @@
-LInit(60, "myapp", 414, 736, main);
+LInit(1000 / 60, "myapp", 414, 736, main);
 
 var DRAW_SCALE = 30, TIME_SCALE = 1000;
 
@@ -13,22 +13,36 @@ function main () {
 
 	LGlobal.screen(LGlobal.FULL_SCREEN);
 
-	var loadList = [
-		{path : "./js/Wave.js"},
-		{path : "./js/Oscillator.js"},
-		{path : "./js/ControlLayer.js"}
-	];
-
-	LLoadManage.load(loadList, null, addLayers);
-}
-
-function addLayers () {
 	stageLayer = new LSprite();
 	addChild(stageLayer);
 
+	var loadingTxt = new LTextField();
+	loadingTxt.text = "Loading...";
+	loadingTxt.size = 22;
+	loadingTxt.textAlign = "center";
+	loadingTxt.x = LGlobal.width / 2;
+	loadingTxt.y = 300;
+	stageLayer.addChild(loadingTxt);
+
+	var loadList = [
+		{path : "./js/Wave.js"},
+		{path : "./js/Oscillator.js"},
+		{path : "./js/Panel.js"},
+		{path : "./js/TabWidget.js"},
+		{path : "./js/ControlLayer.js"}
+	];
+
+	LLoadManage.load(loadList, null, function () {
+		loadingTxt.remove();
+
+		addLayers();
+	});
+}
+
+function addLayers () {
 	demoLayer = new LSprite();
 	demoLayer.x = 15;
-	demoLayer.y = 190;
+	demoLayer.y = 150;
 	stageLayer.addChild(demoLayer);
 
 	demoLayer.graphics.add(function () {
@@ -41,18 +55,36 @@ function addLayers () {
 
 	ctrlLayer = new ControlLayer();
 	ctrlLayer.x = 20;
-	ctrlLayer.y = 380;
+	ctrlLayer.y = 330;
 	stageLayer.addChild(ctrlLayer);
 
 	stageLayer.addEventListener(LEvent.ENTER_FRAME, onFrame);
 }
 
 function addTwoWaves (w1Data, w2Data) {
-	w1 = new Wave(1, w1Data[0], w1Data[1], w1Data[2]);
-	w1.start();
+	var timer;
 
-	w2 = new Wave(-1, w2Data[0], w2Data[1], w2Data[2]);
-	w2.start();
+	w1 = new Wave(w1Data);
+	if (w1Data[3] > 0) {
+		timer = new LTimer(w1Data[3] * 1000, 1);
+		timer.addEventListener(LTimerEvent.TIMER_COMPLETE, function () {
+			w1.start();
+		});
+		timer.start();
+	} else {
+		w1.start();
+	}
+
+	w2 = new Wave(w2Data);
+	if (w2Data[3] > 0) {
+		timer = new LTimer(w2Data[3] * 1000, 1);
+		timer.addEventListener(LTimerEvent.TIMER_COMPLETE, function () {
+			w2.start();
+		});
+		timer.start();
+	} else {
+		w2.start();
+	}
 }
 
 function onFrame () {
