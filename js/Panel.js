@@ -15,7 +15,7 @@ function Panel (title) {
 	s.addChild(widget);
 	s.amplitudeRange = widget.range;
 
-	widget = Panel.createRange("Delay: ", 0, Wave.MAX_T, "s");
+	widget = Panel.createRange("Delay: ", 0, Wave.MAX_T * 3, "s");
 	s.addChild(widget);
 	s.delayRange = widget.range;
 

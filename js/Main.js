@@ -29,7 +29,8 @@ function main () {
 		{path : "./js/Oscillator.js"},
 		{path : "./js/Panel.js"},
 		{path : "./js/TabWidget.js"},
-		{path : "./js/ControlLayer.js"}
+		{path : "./js/ControlLayer.js"},
+		{path : "./js/HelpDialog.js"},
 	];
 
 	LLoadManage.load(loadList, null, function () {

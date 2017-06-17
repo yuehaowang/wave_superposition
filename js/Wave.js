@@ -3,7 +3,7 @@
  * 0	wave length		[0.6, 5.0]
  * 1	period 			[0.2, 2.0]
  * 2	amplitude 		[0.6, 3.0]
- * 3	delay  			[0, 2.0]
+ * 3	delay  			[0, 6.0]
  * 4	origin 			1: left; -1: right
  * 5	initial dir 	1: up; -1: down
  * 6	available 		0: yes; 1: no

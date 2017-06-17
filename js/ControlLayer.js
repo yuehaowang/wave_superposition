@@ -32,6 +32,14 @@ ControlLayer.prototype.init = function () {
 	]);
 	s.addChild(tabWidget);
 
+	var helpBtn = new LButtonSample1("?", 20);
+	helpBtn.y = 320;
+	s.addChild(helpBtn);
+
+	helpBtn.addEventListener(LMouseEvent.MOUSE_UP, function () {
+		HelpDialog.show();
+	});
+
 	var startBtn = new LButtonSample1("Start", 20);
 	startBtn.x = LGlobal.width - 200;
 	startBtn.y = 320;
