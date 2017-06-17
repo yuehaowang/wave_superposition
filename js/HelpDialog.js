@@ -6,6 +6,7 @@ var HelpDialog = {
 		{type : "item", content : "Designer: Yuehao Wang"},
 		{type : "item", content : "Programmer: Yuehao Wang"},
 		{type : "item", content : "Email: wangyuehao1999@gmail.com"},
+		{type : "item", content : "Weibo: @Yorhom"},
 		{type : "item", content : "App Engine: lufylegend.js"},
 		{type : "message", content : "For my physics teacher Mr. Lei."},
 		{type : "message", content : "Copyright 2017 Yuehao."}
@@ -24,17 +25,19 @@ var HelpDialog = {
 			var obj = list[i], fontSize, fontWeight, lineHeight;
 
 			if (obj.type == "title") {
-				fontSize = 18;
+				fontSize = 25;
 				fontWeight = "bold";
-				lineHeight = 40;
+				lineHeight = 45;
 			} else if (obj.type == "item") {
-				fontSize = 12;
+				fontSize = 14;
 				fontWeight = "normal";
 				lineHeight = 30;
 			} else if (obj.type == "message") {
-				fontSize = 12;
+				fontSize = 15;
 				fontWeight = "bold italic";
 				lineHeight = 32;
+
+				toY += 10;
 			} else {
 				continue;
 			}
@@ -42,9 +45,8 @@ var HelpDialog = {
 			var txt = new LTextField();
 			txt.size = fontSize;
 			txt.weight = fontWeight;
-			txt.textAlign = "center";
 			txt.text = obj.content;
-			txt.x = dW / 2;
+			txt.x = (dW - txt.getWidth()) / 2;
 			txt.y = toY;
 			contentLayer.addChild(txt);
 
@@ -57,6 +59,29 @@ var HelpDialog = {
 	},
 
 	show : function () {
-		LMessageBox.show({displayObject: HelpDialog.createHelpLayer()});
+		var content = HelpDialog.createHelpLayer(),
+			w = content.getWidth(),
+			h = content.getHeight();
+
+		var bg = new LSprite();
+		bg.graphics.drawRect(0, "", [0, 0, LGlobal.width, LGlobal.height], true, "transparent");
+		LGlobal.stage.addChild(bg);
+		bg.addEventListener(LMouseEvent.MOUSE_UP, function (e) {});
+		bg.addEventListener(LMouseEvent.MOUSE_DOWN, function (e) {});
+		bg.addEventListener(LMouseEvent.MOUSE_MOVE, function (e) {});
+		bg.addEventListener(LMouseEvent.MOUSE_OVER, function (e) {});
+		bg.addEventListener(LMouseEvent.MOUSE_OUT, function (e) {});
+		
+		var myWindow = new LWindow(w, h, "");
+		myWindow.x = (LGlobal.width - myWindow.getWidth()) * 0.5;
+		myWindow.y = (LGlobal.height - myWindow.getHeight()) * 0.5;
+		LGlobal.stage.addChild(myWindow);
+		
+		myWindow.addEventListener(LWindow.CLOSE, function (e) {
+			bg.die();
+			bg.remove();
+		});			
+		
+		myWindow.layer.addChild(content);
 	}
 };
