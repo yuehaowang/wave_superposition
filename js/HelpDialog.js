@@ -76,11 +76,13 @@ var HelpDialog = {
 		myWindow.x = (LGlobal.width - myWindow.getWidth()) * 0.5;
 		myWindow.y = (LGlobal.height - myWindow.getHeight()) * 0.5;
 		LGlobal.stage.addChild(myWindow);
+
+		myWindow.bar.mouseEnabled = false;
 		
 		myWindow.addEventListener(LWindow.CLOSE, function (e) {
 			bg.die();
 			bg.remove();
-		});			
+		});
 		
 		myWindow.layer.addChild(content);
 	}
