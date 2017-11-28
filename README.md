@@ -6,7 +6,7 @@ For my senior high school physics teacher Mr. Lei.
 
 You can [try it online](http://yuehaowang.github.io/demo/wave_superposition/) :)
 
-# Screenshots
+## Screenshots
 
 - Screenshot 1
 
